@@ -31,7 +31,7 @@ $(document).ready(function () {
   }
 
   $(document).on('click', '.gaming-button', function () {
-    $('#giphy').empty();
+    //$('#giphy').empty();
     console.log(this)
     getGif($(this).text());
   });
@@ -68,7 +68,7 @@ $(document).ready(function () {
         var results = response.data;
         console.log(results);
 
-        $("#giphy").empty();
+        //$("#giphy").empty();
 
         for (var i = 0; i < results.length; i++) {
           addGif(results[i].images.original_still.url, results[i].images.fixed_height_url, results[i].rating);
@@ -84,11 +84,11 @@ $(document).ready(function () {
     img.attr('src', still);
     img.attr('data-still', still);
     img.attr('data-gif', gif);
-    img.attr('data-status', still);
+    img.attr('data-status', 'still');
     cardBody.append(img);
     card.append(header);
     card.append(cardBody);
-    $('#giphy').append(card);
+    $('#giphy').prepend(card);
   }
   popbuttons(gamingGif);
 });
