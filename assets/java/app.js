@@ -6,6 +6,15 @@
 //then click again for it to be still
 //using the search to update and add new button with user text and gifs
 //added to lower display while leaving the others there
+var gamingGif=[
+'mario',
+'call of duty',
+'sonic',
+'vr chatroom',
+'pokemon',
+'borderlands',
+'monster hunter world'
+]
 $("button").on("click", function () {
     var person = $(this).attr("data-person");
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -41,4 +50,20 @@ $("button").on("click", function () {
   });
 $("img").on("click",function changeImg() {
     //if statement to verify if still then animated and back
+})
+
+//gernerate buttons
+function popbuttons(gamingGif){
+  $('#buttons').empty();
+
+  for (let q = 0; q < gamingGif.length; q++) {
+   let btn=$('<button>');
+   btn.text(gamingGif[q]);
+   btn.addClass('btn btn-success gaming-button');
+   $('#buttons').append(btn);
+  }
+}
+$(document).on('click','gaming-button',function(){
+  $('#giphy').empty();
+  
 })
