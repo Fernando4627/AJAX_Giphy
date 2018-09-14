@@ -6,64 +6,81 @@
 //then click again for it to be still
 //using the search to update and add new button with user text and gifs
 //added to lower display while leaving the others there
-var gamingGif=[
-'mario',
-'call of duty',
-'sonic',
-'vr chatroom',
-'pokemon',
-'borderlands',
-'monster hunter world'
+var gamingGif = [
+  'mario',
+  'call of duty',
+  'sonic',
+  'vr chatroom',
+  'pokemon',
+  'borderlands',
+  'monster hunter world'
 ]
-$("button").on("click", function () {
-    var person = $(this).attr("data-person");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      person + "&api_key=10IhGB3JlNMbTlYbOAsIeHXZuM3JE9iC&limit=10";
+$("button").on("click", function getGif(person) {
+  var person = $(this).attr("data-person");
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+    person + "&api_key=10IhGB3JlNMbTlYbOAsIeHXZuM3JE9iC&limit=10";
 
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    })
-      .then(function (response) {
-        var results = response.data;
-        console.log(results);
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  })
+    .then(function (response) {
+      var results = response.data;
+      console.log(results);
 
-        $("#giphy").empty();
+      $("#giphy").empty();
 
-        for (var i = 0; i < results.length; i++) {
-          var gifDiv = $("<div class='item'>");
+      for (var i = 0; i < results.length; i++) {
+        var gifDiv = $("<div class='item'>");
 
-          var rating = results[i].rating;
+        var rating = results[i].rating;
 
-          var p = $("<p>").text("Rating: " + rating);
+        var p = $("<p>").text("Rating: " + rating);
 
-          var personImage = $("<img class=img>");
-          personImage.attr("src", results[i].images.original_still.url);
+        var personImage = $("<img class=img>");
+        personImage.attr("src", results[i].images.original_still.url);
 
 
-          gifDiv.prepend(p);
-          gifDiv.prepend(personImage);
+        gifDiv.prepend(p);
+        gifDiv.prepend(personImage);
 
-          $("#giphy").prepend(gifDiv);
-        }
-      });
-  });
-$("img").on("click",function changeImg() {
-    //if statement to verify if still then animated and back
+        $("#giphy").prepend(gifDiv);
+      }
+    });
+});
+$("img").on("click", function changeImg() {
+  //if statement to verify if still then animated and back
 })
 
 //gernerate buttons
-function popbuttons(gamingGif){
+function popbuttons(gamingGif) {
   $('#buttons').empty();
 
   for (let q = 0; q < gamingGif.length; q++) {
-   let btn=$('<button>');
-   btn.text(gamingGif[q]);
-   btn.addClass('btn btn-success gaming-button');
-   $('#buttons').append(btn);
+    let btn = $('<button>');
+    btn.text(gamingGif[q]);
+    btn.addClass('btn btn-success gaming-button');
+    $('#buttons').append(btn);
   }
 }
-$(document).on('click','gaming-button',function(){
+$(document).on('click', 'gaming-button', function () {
   $('#giphy').empty();
-  
-})
+  getGif($(this).text());
+});
+$('#addSearch data-person').on('click', function (event) {
+  event.preventDefault();
+  let text = $('#searchItem').val();
+  $('#searchItem').val('');
+  gamingGif.push(text);
+  popbuttons(gamingGif);
+});
+$(document).on('click','img', function(){
+  if($(this).attr('data-status')==="still"){
+    $(this).attr('src',$(this).attr('data-gif'));
+    $(this).attr('data-status','gif');
+  }
+  else{
+    $(this).attr('src',$(this).attr('data-still'));
+    $(this).attr('data-status','still');
+  }
+});
