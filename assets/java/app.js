@@ -71,13 +71,16 @@ $(document).ready(function () {
         //$("#giphy").empty();
 
         for (var i = 0; i < results.length; i++) {
-          addGif(results[i].images.original_still.url, results[i].images.fixed_height_url, results[i].rating);
+          addGif(
+            results[i].images.original_still.url,
+            results[i].images.fixed_height.url,
+            results[i].rating);
         }
       });
   }
   function addGif(gif, still, rating) {
-    let card = $('<div class="card"></div>');
-    let cardBody = $('<div class="card-body"></div>');
+    let card = $('<div class="card offset-md-1 col-md-10 align-self-center"></div>');
+    let cardBody = $('<div class="card-body col-md-auto align-self-center"></div>');
     let header = $('<div class="card-header"></div>');
     header.text(rating.toUpperCase());
     let img = $('<img>');
